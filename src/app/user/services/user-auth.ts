@@ -18,6 +18,8 @@ export class UserAuth {
 
   private _user: UserItem;
 
+  private _authenticated: boolean = false;
+
   private _endpoint: string = 'http://localhost:8080/rest2ldap/users/';
 
   private _handleError (error: Response) {
@@ -32,6 +34,11 @@ export class UserAuth {
     return this._user;
   }
 
+  public isUserAuthenticated() {
+    console.info('User is authenticated', this._authenticated);
+    return this._authenticated;
+  }
+
   public login(credentials: UserCredentials) {
     const headers = new Headers({
       'X-Username': credentials.username || '',
@@ -41,7 +48,12 @@ export class UserAuth {
     console.log('UserAuth#login(): Get Data', headers, credentials);
 
     return this.http.get(`${this._endpoint}${credentials.username}`, { headers: headers })
-        .map(res => this._user = res.json())
+        .map(res => {
+          const response = res.json();
+
+          this._authenticated = true;
+          return this._user = response;
+        })
         .catch(this._handleError);
   }
 

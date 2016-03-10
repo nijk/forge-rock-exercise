@@ -1,0 +1,15 @@
+<h1>Search users</h1>
+<form (ngSubmit)="submit()">
+
+    <div *ngIf="errorMessage">
+        <p>{{errorMessage}}</p>
+    </div>
+
+    <label for="search">Search
+        <input type="text" id="search" ngControl="search" [(ngModel)]="model.search" required autofocus>
+    </label>
+    <!--<show-error control="password" [errors]="['required']"></show-error>-->
+    <button>Submit</button>
+
+    <pre>Credentials = {{ model | json }}</pre>
+</form>

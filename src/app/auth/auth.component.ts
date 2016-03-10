@@ -5,21 +5,16 @@
 import { Component } from 'angular2/core';
 import { CORE_DIRECTIVES, FORM_DIRECTIVES } from 'angular2/common';
 
-import { UserAuth } from './services/user-auth';
+import { UserAuth } from '../user/services/user-auth';
 import { UserCredentials } from '../user/user-credentials';
 
 @Component({
     selector: 'auth',
-    // We need to tell Angular's Dependency Injection which providers are in our app.
-    providers: [ UserAuth ],
-    // We need to tell Angular's compiler which directives are in our template.
-    // Doing so will allow Angular to attach our behavior to an element
+    providers: [],
     directives: [
         CORE_DIRECTIVES,
         FORM_DIRECTIVES
     ],
-    pipes: [ ],
-    //styles: [ require('./home.css') ],
     template: require('./auth.html')
 })
 
@@ -35,11 +30,15 @@ export class Auth {
     ngOnInit() {
     }
 
-    getUser() {
+    public getUser() {
         return this.userAuth.getUser();
     }
 
-    submit() {
+    public isUserAuthenticated() {
+        return this.userAuth.isUserAuthenticated();
+    }
+
+    public submit() {
         this.userAuth.login(this.model).subscribe(
             data => {
                 this.errorMessage = '';

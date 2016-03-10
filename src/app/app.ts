@@ -6,7 +6,8 @@ import {RouteConfig, Router, ROUTER_DIRECTIVES} from 'angular2/router';
 import {FORM_PROVIDERS} from 'angular2/common';
 
 import {RouterActive} from './directives/router-active';
-import {Home} from './home/home';
+import { Auth } from './auth/auth.component';
+import { UserAuth } from './user/services/user-auth';
 
 /*
  * App Component
@@ -14,7 +15,7 @@ import {Home} from './home/home';
  */
 @Component({
   selector: 'app',
-  providers: [ ...FORM_PROVIDERS ],
+  providers: [ ...FORM_PROVIDERS, UserAuth ],
   directives: [ ...ROUTER_DIRECTIVES, RouterActive ],
   pipes: [],
   styles: [`
@@ -38,13 +39,10 @@ import {Home} from './home/home';
         <h1>{{ name }}</h1>
         <ul>
           <li router-active>
-            <a [routerLink]=" ['Index'] ">Index</a>
+            <a [routerLink]=" ['Login'] ">Login</a>
           </li>
           <li router-active>
-            <a [routerLink]=" ['Home'] ">Home</a>
-          </li>
-          <li router-active>
-            <a [routerLink]=" ['Auth'] ">Login</a>
+            <a [routerLink]=" ['Search'] ">Search</a>
           </li>
         </ul>
       </nav>
@@ -56,16 +54,15 @@ import {Home} from './home/home';
   `
 })
 @RouteConfig([
-  { path: '/', component: Home, name: 'Index' },
-  { path: '/home', component: Home, name: 'Home' },
+  { path: '/login', component: Auth, name: 'Login', useAsDefault: true },
   // Async load a component using Webpack's require with es6-promise-loader and webpack `require`
-  { path: '/auth', loader: () => require('es6-promise!./auth/auth')('Auth'), name: 'Auth' },
-  { path: '/**', redirectTo: ['Index'] }
+  //{ path: '/auth', loader: () => require('es6-promise!./auth/auth.component')('Auth'), name: 'Auth' },
+  { path: '/search', loader: () => require('es6-promise!./search/search.component')('Search'), name: 'Search' },
+  { path: '/**', redirectTo: ['Search'] }
 ])
-export class App{
+export class App {
   name = 'ForgeRock';
-  constructor() {
-
+  constructor(){
   }
 }
 
