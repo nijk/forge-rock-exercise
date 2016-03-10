@@ -35,7 +35,7 @@ import {Home} from './home/home';
   template: `
     <header>
       <nav>
-        <h1>Hello {{ name }}</h1>
+        <h1>{{ name }}</h1>
         <ul>
           <li router-active>
             <a [routerLink]=" ['Index'] ">Index</a>
@@ -44,7 +44,7 @@ import {Home} from './home/home';
             <a [routerLink]=" ['Home'] ">Home</a>
           </li>
           <li router-active>
-            <a [routerLink]=" ['About'] ">About</a>
+            <a [routerLink]=" ['Auth'] ">Login</a>
           </li>
         </ul>
       </nav>
@@ -53,26 +53,17 @@ import {Home} from './home/home';
     <main>
       <router-outlet></router-outlet>
     </main>
-
-    <footer>
-      WebPack Angular 2 Starter by <a [href]="url">@AngularClass</a>
-      <div>
-        <img [src]="angularclassLogo" width="10%">
-      </div>
-    </footer>
   `
 })
 @RouteConfig([
   { path: '/', component: Home, name: 'Index' },
   { path: '/home', component: Home, name: 'Home' },
   // Async load a component using Webpack's require with es6-promise-loader and webpack `require`
-  { path: '/about', loader: () => require('es6-promise!./about/about')('About'), name: 'About' },
+  { path: '/auth', loader: () => require('es6-promise!./auth/auth')('Auth'), name: 'Auth' },
   { path: '/**', redirectTo: ['Index'] }
 ])
 export class App{
-  angularclassLogo = 'assets/img/angularclass-avatar.png';
-  name = 'Angular 2 Webpack Starter';
-  url = 'https://twitter.com/AngularClass';
+  name = 'ForgeRock';
   constructor() {
 
   }
