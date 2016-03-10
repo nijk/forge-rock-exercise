@@ -6,11 +6,7 @@ import { Component } from 'angular2/core';
 import { CORE_DIRECTIVES, FORM_DIRECTIVES } from 'angular2/common';
 
 import { UserAuth } from './services/user-auth';
-
-class UserModel {
-    username: string;
-    password: string;
-}
+import { UserCredentials } from '../user/user-credentials';
 
 @Component({
     selector: 'auth',
@@ -26,22 +22,31 @@ class UserModel {
     //styles: [ require('./home.css') ],
     template: require('./auth.html')
 })
+
 export class Auth {
-    model = new UserModel();
-    // Set our default values
-    data = { value: '' };
-    // TypeScript public modifiers
     constructor(public userAuth: UserAuth) {
 
     }
 
+    model: UserCredentials = { username: '', password: '' };
+
+    errorMessage: string = '';
+
     ngOnInit() {
-        console.log('hello `Home` component');
-        this.userAuth.login().subscribe(data => this.data = data);
+    }
+
+    getUser() {
+        return this.userAuth.getUser();
     }
 
     submit() {
-        console.log('Submit Form', this.model);
+        this.userAuth.login(this.model).subscribe(
+            data => {
+                this.errorMessage = '';
+                console.log('Authenticated', this.model, this.userAuth.getUser(), data);
+            },
+            e => this.errorMessage = e
+        );
     }
 }
 

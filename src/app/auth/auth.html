@@ -1,4 +1,9 @@
 <form (ngSubmit)="submit()">
+
+    <div *ngIf="errorMessage">
+        <p>{{errorMessage}}</p>
+    </div>
+
     <label for="username">Username
         <input type="text" id="username" ngControl="username" [(ngModel)]="model.username" required autofocus>
     </label>
@@ -8,7 +13,6 @@
     <!--<show-error control="password" [errors]="['required']"></show-error>-->
     <button>Submit</button>
 
-
-
-    <pre>this.model = {{ model | json }}</pre>
+    <pre>Credentials = {{ model | json }}</pre>
+    <pre>Current user: {{ getUser() | json }}</pre>
 </form>
