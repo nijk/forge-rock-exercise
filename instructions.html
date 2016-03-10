@@ -1,0 +1,124 @@
+<body style="width: 800px;">
+
+<h1>Frontend Developer Programming Exercise</h1>
+
+<p>
+Your task is to create a simple user interface that allows a user to login and perform
+simple search operations. This is to be done with Javascript, HTML and CSS, using any libraries, 
+frameworks, or tools you prefer (so long as they are also Javascript-, HTML- or CSS-based).
+This is expected to be around 3-4 hours worth of work. Be prepared to discuss your solution and
+the reasoning behind your approach after you are finished.
+</p>
+
+<p>
+Add code to this folder (/test) to perform your programming exercise.
+</p>
+
+<h2>Backend Details</h2>
+
+<p>
+This is the endpoint you will be invoking as part of this test: <strong>http://localhost:8080/rest2ldap/users</strong>
+</p>
+
+<p>
+This is a REST-based URL that returns JSON. It is designed to allow you to easily make 
+requests for user data using AJAX. The actual user data is stored in a publicly-
+accessible LDAP server; this endpoint has been preconfigured to work with that server.
+You are not expected to have or need any knowledge of LDAP or server configuration for this test.
+</p>
+
+<p>
+Requests to this endpoint must be made with AJAX or another REST client. You cannot simply open it 
+with your browser, because it expects authentication headers to be present as part of the request. 
+You can login with the <strong>X-Username: user.0</strong> and <strong>X-Password: password</strong>. 
+It is expected that the user will provide these values as part of the login process for the application
+you are building.
+</p>
+
+<p>
+
+To make requests on this endpoint, you will need to provide authentication headers like so:
+
+<blockquote><pre>
+GET http://localhost:8080/rest2ldap/users/user.0 HTTP/1.0
+X-Username:user.0
+X-Password:password
+</pre></blockquote>
+
+This will return data like so:
+
+<blockquote><pre>{
+    "_rev": "000000004600b1fa",
+    "schemas": [
+        "urn:scim:schemas:core:1.0"
+    ],
+    "contactInformation": {
+        "telephoneNumber": "+1 685 622 6202",
+        "emailAddress": "user.0@maildomain.net"
+    },
+    "_id": "user.0",
+    "name": {
+        "familyName": "Amar",
+        "givenName": "Aaccf"
+    },
+    "userName": "user.0@maildomain.net",
+    "displayName": "Aaccf Amar"
+}</pre></blockquote>
+
+In addition to making a request for a specific user (as above), you can also perform search requests (shown unencoded for convenience):
+
+<blockquote><pre>
+GET http://localhost:8080/rest2ldap/users?_queryFilter=name/givenName sw "Amab" and displayName co "Ant" HTTP/1.0
+X-Username:user.0
+X-Password:password
+</pre></blockquote>
+
+This will return data like so:
+
+<blockquote><pre>{
+    "result": [
+        {
+            "_rev": "00000000e72bb5f3",
+            "schemas": [
+                "urn:scim:schemas:core:1.0"
+            ],
+            "contactInformation": {
+                "telephoneNumber": "+1 397 180 7818",
+                "emailAddress": "user.289@maildomain.net"
+            },
+            "_id": "user.289",
+            "name": {
+                "familyName": "Antle",
+                "givenName": "Amabel"
+            },
+            "userName": "user.289@maildomain.net",
+            "displayName": "Amabel Antle"
+        },
+        {
+            "_rev": "000000004c45b66d",
+            "schemas": [
+                "urn:scim:schemas:core:1.0"
+            ],
+            "contactInformation": {
+                "telephoneNumber": "+1 331 181 4377",
+                "emailAddress": "user.290@maildomain.net"
+            },
+            "_id": "user.290",
+            "name": {
+                "familyName": "Antoft",
+                "givenName": "Amabelle"
+            },
+            "userName": "user.290@maildomain.net",
+            "displayName": "Amabelle Antoft"
+        }
+    ],
+    "resultCount": 2,
+    "pagedResultsCookie": null,
+    "remainingPagedResults": -1
+}</pre></blockquote>
+
+You can have complex values for _queryFilter, but the main point to userstand is that you can refer to top-level fields (such as "userName") by their name, and you refer to nested properties with a path separator like so: "name/givenName" and "contactInformation/emailAddress". There are several operators allowed, the most important being these: sw means "Starts With"; co means "Contains"; eq means "Equals". As can be seen from the example, you can combine statements with "and"/"or".
+
+</p>
+
+</body>
