@@ -18,9 +18,14 @@ export class UserAuthService extends UserBaseService {
   }
 
   private _user: UserItem;
+  private _userCredentials: UserCredentials;
 
   public getUser() {
     return this._user;
+  }
+
+  public getUserCredentials() {
+    return this._userCredentials;
   }
 
   public isUserAuthenticated() {
@@ -29,17 +34,14 @@ export class UserAuthService extends UserBaseService {
 
   public login(credentials: UserCredentials) {
     const path = `users/${credentials.username}`;
-    const headers = new Headers({
-      'X-Username': <string>credentials.username,
-      'X-Password': <string>credentials.password
-    });
 
-    console.log('UserAuthService#login(): Get Data', headers, credentials);
+    console.log('UserAuthService#login(): Get Data', credentials);
 
     return Observable.create(observer => {
-      this.send(path, headers).subscribe(
+      this.send(path, credentials).subscribe(
           json => {
             this._user = json;
+            this._userCredentials = credentials;
             observer.next(this._user);
           },
           e => observer.error(e)

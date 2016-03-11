@@ -4,6 +4,7 @@
 
 import { Http, Response, Headers, URLSearchParams } from 'angular2/http';
 import { Observable } from 'rxjs/Observable';
+import {UserCredentials} from "../user-credentials";
 
 
 export abstract class UserBaseService {
@@ -20,18 +21,18 @@ export abstract class UserBaseService {
     return Observable.throw(new Error(errorMessage));
   }
 
-  protected send(path: string, headers?: Headers, search?: URLSearchParams) {
+  protected send(path: string, credentials: UserCredentials, search?: URLSearchParams) {
     const params: Object = {};
-
-    if (!!headers) {
-      params['headers'] = headers;
-    }
+    params['headers'] = new Headers({
+      'X-Username': <string>credentials.username,
+      'X-Password': <string>credentials.password
+    });
 
     if (!!search) {
       params['search'] = search;
     }
 
-    console.log('UserAuthService#login(): Get Data', headers, search, params);
+    console.log('UserBaseService#send(): Params', params);
 
     return this.http.get(`${this._endpoint}${path}`, params)
         .map(res => res.json())

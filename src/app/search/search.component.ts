@@ -8,7 +8,10 @@ import { RouteConfig, Router, ROUTER_DIRECTIVES} from 'angular2/router';
 
 import { UserAuthService } from '../user/services/user-auth.service';
 import { UserSearchService } from '../user/services/user-search.service';
+import { UserMessagesService } from "../components/user-messages.service";
+
 import { Auth } from '../auth/auth.component';
+import { UserItem } from '../user/user-item';
 
 @Component({
     selector: 'auth',
@@ -17,7 +20,7 @@ import { Auth } from '../auth/auth.component';
         CORE_DIRECTIVES,
         FORM_DIRECTIVES
     ],
-    template: require('./search.html')
+    template: require('./search.component.html')
 })
 
 /*@RouteConfig([
@@ -26,34 +29,35 @@ import { Auth } from '../auth/auth.component';
 export class Search {
     constructor(
         private _userAuthService: UserAuthService,
+        private _userMessagesService: UserMessagesService,
         private _userSearchService: UserSearchService,
         private _router: Router) {
 
     }
 
-    model: any = { username: '', password: '' };
+    results: UserItem[] = [];
+
+    model = { search: '' };
 
     errorMessage: string = '';
 
     ngOnInit() {
-        if (!this.isUserAuthenticated()) {
+        if (!this._userAuthService.isUserAuthenticated()) {
             console.info('User not authenticated, redirecting');
             return this._router.navigate(['../Login']);
         }
     }
 
-    public isUserAuthenticated() {
-        return this._userAuthService.isUserAuthenticated();
-    }
-
     public submit() {
-        /*this._userSearchService.query(this.model).subscribe(
+        const credentials = this._userAuthService.getUserCredentials();
+        this._userSearchService.query(this.model.search, credentials).subscribe(
             data => {
-                this.errorMessage = '';
-                console.log('Authenticated', this.model, this._userAuthService.getUser(), data);
+                this._userMessagesService.clearMessages();
+                this.results = data.result;
+                console.log('Search', this.model.search, credentials, data);
             },
-            e => this.errorMessage = e
-        );*/
+            e => this._userMessagesService.addMessage(<string>e, 'danger')
+        );
     }
 }
 
