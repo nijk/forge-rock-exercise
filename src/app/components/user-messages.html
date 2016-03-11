@@ -1,0 +1,3 @@
+<alert *ngFor="#message of messages;#i = index" [type]="message.type" [dismissible]="message.dismissible" (close)="closeMessage(i)">
+    {{ message?.msg }}
+</alert>

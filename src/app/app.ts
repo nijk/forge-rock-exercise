@@ -8,6 +8,8 @@ import {FORM_PROVIDERS} from 'angular2/common';
 import {RouterActive} from './directives/router-active';
 import { Auth } from './auth/auth.component';
 import { UserAuth } from './user/services/user-auth';
+import { UserMessagesService } from './components/user-messages.service';
+
 
 /*
  * App Component
@@ -15,43 +17,17 @@ import { UserAuth } from './user/services/user-auth';
  */
 @Component({
   selector: 'app',
-  providers: [ ...FORM_PROVIDERS, UserAuth ],
-  directives: [ ...ROUTER_DIRECTIVES, RouterActive ],
-  pipes: [],
-  styles: [`
-    nav ul {
-      display: inline;
-      list-style-type: none;
-      margin: 0;
-      padding: 0;
-      width: 60px;
-    }
-    nav li {
-      display: inline;
-    }
-    nav li.active {
-      background-color: lightgray;
-    }
-  `],
-  template: `
-    <header>
-      <nav>
-        <h1>{{ name }}</h1>
-        <ul>
-          <li router-active>
-            <a [routerLink]=" ['Login'] ">Login</a>
-          </li>
-          <li router-active>
-            <a [routerLink]=" ['Search'] ">Search</a>
-          </li>
-        </ul>
-      </nav>
-    </header>
-
-    <main>
-      <router-outlet></router-outlet>
-    </main>
-  `
+  providers: [
+    ...FORM_PROVIDERS,
+    UserAuth,
+    UserMessagesService
+  ],
+  directives: [
+    ...ROUTER_DIRECTIVES,
+    RouterActive
+  ],
+  styles: [],
+  template: require('./app.html')
 })
 @RouteConfig([
   { path: '/login', component: Auth, name: 'Login', useAsDefault: true },

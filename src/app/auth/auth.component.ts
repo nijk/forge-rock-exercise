@@ -2,30 +2,38 @@
  * Created by nijk on 10/03/2016.
  */
 
-import { Component } from 'angular2/core';
+import { Component, OnInit } from 'angular2/core';
 import { CORE_DIRECTIVES, FORM_DIRECTIVES } from 'angular2/common';
 
 import { UserAuth } from '../user/services/user-auth';
 import { UserCredentials } from '../user/user-credentials';
+
+import { UserMessages } from '../components/user-messages';
+import { UserMessagesService } from "../components/user-messages.service";
 
 @Component({
     selector: 'auth',
     providers: [],
     directives: [
         CORE_DIRECTIVES,
-        FORM_DIRECTIVES
+        FORM_DIRECTIVES,
+        UserMessages
     ],
-    template: require('./auth.html')
+    template: require('./auth.component.html'),
+    styles: [`
+        body {
+          padding: 20px;
+        }
+    `]
 })
-
-export class Auth {
-    constructor(public userAuth: UserAuth) {
+export class Auth implements OnInit {
+    constructor(
+        public userAuth: UserAuth,
+        public _userMessagesService: UserMessagesService) {
 
     }
 
     model: UserCredentials = { username: '', password: '' };
-
-    errorMessage: string = '';
 
     ngOnInit() {
     }
@@ -41,10 +49,12 @@ export class Auth {
     public submit() {
         this.userAuth.login(this.model).subscribe(
             data => {
-                this.errorMessage = '';
+                this._userMessagesService.clearMessages();
                 console.log('Authenticated', this.model, this.userAuth.getUser(), data);
             },
-            e => this.errorMessage = e
+            e => {
+                this._userMessagesService.addMessage(<string>e, 'danger');
+            }
         );
     }
 }

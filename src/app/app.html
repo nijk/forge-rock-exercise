@@ -1,0 +1,18 @@
+<header>
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header"><span class="navbar-brand">{{ name }}</span></div>
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li router-active><a [routerLink]=" ['Login'] ">Login</a></li>
+                    <li router-active><a [routerLink]=" ['Search'] ">Search</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<main>
+    <router-outlet></router-outlet>
+</main>

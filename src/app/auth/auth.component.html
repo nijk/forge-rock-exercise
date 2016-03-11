@@ -1,0 +1,16 @@
+<h1>Login</h1>
+<form (ngSubmit)="submit()">
+
+    <user-messages></user-messages>
+
+    <label for="username">Username
+        <input type="text" id="username" class="form-control" ngControl="username" [(ngModel)]="model.username" required autofocus>
+    </label>
+    <label for="password">Password
+        <input type="password" id="password" class="form-control" ngControl="password" [(ngModel)]="model.password" required>
+    </label>
+    <button class="btn btn-primary">Submit</button>
+
+    <pre>Credentials = {{ model | json }}</pre>
+    <pre>Current user: {{ getUser() | json }}</pre>
+</form>
