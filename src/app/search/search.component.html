@@ -1,9 +1,12 @@
 <h1>Search users</h1>
 <user-messages></user-messages>
 <form (ngSubmit)="submit()">
-    <label for="search">Search
-        <input type="text" id="search" ngControl="search" [(ngModel)]="model.search" required autofocus>
-    </label>
+    Search
+    <fieldset>
+        <label *ngFor="#item of query" for="search">
+            <input *ngIf="item.search" type="text" id="search" class="form-control" ngControl="search" [(ngModel)]="item.search" required autofocus>
+        </label>
+    </fieldset>
     <button class="btn btn-primary">Search</button>
 
     <pre>Credentials = {{ model | json }}</pre>
