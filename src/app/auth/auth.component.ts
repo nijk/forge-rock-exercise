@@ -4,6 +4,7 @@
 
 import { Component, OnInit } from 'angular2/core';
 import { CORE_DIRECTIVES, FORM_DIRECTIVES } from 'angular2/common';
+import { Router } from 'angular2/router';
 
 import { UserAuthService } from '../user/services/user-auth.service';
 import { UserCredentials } from '../user/user-credentials';
@@ -29,7 +30,8 @@ import { UserMessagesService } from "../components/user-messages.service";
 export class Auth implements OnInit {
     constructor(
         private _userAuthService: UserAuthService,
-        private _userMessagesService: UserMessagesService) {
+        private _userMessagesService: UserMessagesService,
+        private _router: Router) {
 
     }
 
@@ -50,11 +52,12 @@ export class Auth implements OnInit {
         this._userAuthService.login(this.model).subscribe(
             data => {
                 this._userMessagesService.clearMessages();
-                console.log('User Authenticated:', this._userAuthService.isUserAuthenticated());
+                //console.log('User Authenticated:', this._userAuthService.isUserAuthenticated());
+                return this._router.navigate(['Search']);
             },
             e => {
                 this._userMessagesService.addMessage(<string>e, 'danger');
-                console.log('User Authenticated:', this._userAuthService.isUserAuthenticated());
+                //console.log('User Authenticated:', this._userAuthService.isUserAuthenticated());
             }
         );
     }

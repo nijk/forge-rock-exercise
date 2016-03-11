@@ -30,10 +30,19 @@ import { UserMessagesService } from './components/user-messages.service';
   template: require('./app.html')
 })
 @RouteConfig([
-  { path: '/login', component: Auth, name: 'Login', useAsDefault: true },
+  {
+    path: '/login',
+    component: Auth,
+    name: 'Login'
+  },
   // Async load a component using Webpack's require with es6-promise-loader and webpack `require`
   //{ path: '/auth', loader: () => require('es6-promise!./auth/auth.component')('Auth'), name: 'Auth' },
-  { path: '/search', loader: () => require('es6-promise!./search/search.component')('Search'), name: 'Search' },
+  {
+    path: '/search',
+    loader: () => require('es6-promise!./search/search.component')('Search'),
+    name: 'Search',
+    useAsDefault: true
+  },
   { path: '/**', redirectTo: ['Search'] }
 ])
 export class App {
