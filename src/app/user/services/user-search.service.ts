@@ -25,9 +25,9 @@ export class UserSearchService extends UserBaseService {
 
   public query(search: string, credentials: UserCredentials) {
     const params = new URLSearchParams();
-    params.set('_queryFilter', 'name/givenName co \"ab\"');
+    params.set('_queryFilter', `name/familyName co "${search}"`);
 
-    console.log('UserSearchService#login(): Get Data', params, credentials);
+    console.log('UserSearchService#query(): serach', search);
 
     return Observable.create(observer => {
       this.send('users', credentials, params).subscribe(
