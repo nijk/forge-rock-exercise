@@ -10,15 +10,12 @@ import { UserItem } from '../../user/user-item';
 import { UserCredentials } from "../../user/user-credentials";
 
 @Injectable()
-export class UserAuth {
-  value = 'ForgeRock';
+export class UserSearchService {
   constructor(public http: Http) {
 
   }
 
-  private _user: UserItem;
-
-  private _authenticated: boolean = false;
+  private _users: UserItem[] = [];
 
   private _endpoint: string = 'http://localhost:8080/rest2ldap/users/';
 
@@ -31,28 +28,21 @@ export class UserAuth {
   }
 
   public getUser() {
-    return this._user;
+    return this._users;
   }
 
-  public isUserAuthenticated() {
-    console.info('User is authenticated', this._authenticated);
-    return this._authenticated;
-  }
-
-  public login(credentials: UserCredentials) {
+  public query(credentials: UserCredentials) {
     const headers = new Headers({
       'X-Username': credentials.username || '',
       'X-Password': credentials.password || ''
     });
 
-    console.log('UserAuth#login(): Get Data', headers, credentials);
+    console.log('UserAuthService#login(): Get Data', headers, credentials);
 
     return this.http.get(`${this._endpoint}${credentials.username}`, { headers: headers })
         .map(res => {
           const response = res.json();
-
-          this._authenticated = true;
-          return this._user = response;
+          return this._users = response;
         })
         .catch(this._handleError);
   }

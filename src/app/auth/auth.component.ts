@@ -5,7 +5,7 @@
 import { Component, OnInit } from 'angular2/core';
 import { CORE_DIRECTIVES, FORM_DIRECTIVES } from 'angular2/common';
 
-import { UserAuth } from '../user/services/user-auth';
+import { UserAuthService } from '../user/services/user-auth.service';
 import { UserCredentials } from '../user/user-credentials';
 
 import { UserMessages } from '../components/user-messages';
@@ -28,8 +28,8 @@ import { UserMessagesService } from "../components/user-messages.service";
 })
 export class Auth implements OnInit {
     constructor(
-        public userAuth: UserAuth,
-        public _userMessagesService: UserMessagesService) {
+        private _userAuthService: UserAuthService,
+        private _userMessagesService: UserMessagesService) {
 
     }
 
@@ -39,18 +39,18 @@ export class Auth implements OnInit {
     }
 
     public getUser() {
-        return this.userAuth.getUser();
+        return this._userAuthService.getUser();
     }
 
     public isUserAuthenticated() {
-        return this.userAuth.isUserAuthenticated();
+        return this._userAuthService.isUserAuthenticated();
     }
 
     public submit() {
-        this.userAuth.login(this.model).subscribe(
+        this._userAuthService.login(this.model).subscribe(
             data => {
                 this._userMessagesService.clearMessages();
-                console.log('Authenticated', this.model, this.userAuth.getUser(), data);
+                console.log('Authenticated', this.model, this._userAuthService.getUser(), data);
             },
             e => {
                 this._userMessagesService.addMessage(<string>e, 'danger');

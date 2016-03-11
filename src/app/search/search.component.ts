@@ -6,13 +6,13 @@ import { Component } from 'angular2/core';
 import { CORE_DIRECTIVES, FORM_DIRECTIVES } from 'angular2/common';
 import { RouteConfig, Router, ROUTER_DIRECTIVES} from 'angular2/router';
 
+import { UserAuthService } from '../user/services/user-auth.service';
+import { UserSearchService } from '../user/services/user-search.service';
 import { Auth } from '../auth/auth.component';
-import { UserAuth } from '../user/services/user-auth';
-import { UserSearch } from '../user/services/user-search';
 
 @Component({
     selector: 'auth',
-    providers: [ UserSearch ],
+    providers: [ UserSearchService ],
     directives: [
         CORE_DIRECTIVES,
         FORM_DIRECTIVES
@@ -25,8 +25,8 @@ import { UserSearch } from '../user/services/user-search';
 ])*/
 export class Search {
     constructor(
-        public userAuth: UserAuth,
-        private _search: UserSearch,
+        private _userAuthService: UserAuthService,
+        private _userSearchService: UserSearchService,
         private _router: Router) {
 
     }
@@ -43,14 +43,14 @@ export class Search {
     }
 
     public isUserAuthenticated() {
-        return this.userAuth.isUserAuthenticated();
+        return this._userAuthService.isUserAuthenticated();
     }
 
     public submit() {
-        /*this._search.query(this.model).subscribe(
+        /*this._userSearchService.query(this.model).subscribe(
             data => {
                 this.errorMessage = '';
-                console.log('Authenticated', this.model, this._userAuth.getUser(), data);
+                console.log('Authenticated', this.model, this._userAuthService.getUser(), data);
             },
             e => this.errorMessage = e
         );*/

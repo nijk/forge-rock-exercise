@@ -11,7 +11,7 @@ import {BaseRequestOptions, Http} from 'angular2/http';
 import {MockBackend} from 'angular2/http/testing';
 
 
-import {Title} from './user-auth';
+import {Title} from './user-auth.service';
 
 describe('Title', () => {
   beforeEachProviders(() => [

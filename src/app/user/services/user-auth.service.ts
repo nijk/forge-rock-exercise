@@ -6,16 +6,18 @@ import { Injectable, Optional } from 'angular2/core';
 import { Http, Response, Headers } from 'angular2/http';
 import { Observable } from 'rxjs/Observable';
 
-import { UserItem } from '../user-item';
-import { UserCredentials } from "../user-credentials";
+import { UserItem } from '../../user/user-item';
+import { UserCredentials } from "../../user/user-credentials";
 
 @Injectable()
-export class UserSearch {
+export class UserAuthService {
   constructor(public http: Http) {
 
   }
 
-  private _results: UserItem[] = [];
+  private _user: UserItem;
+
+  private _authenticated: boolean = false;
 
   private _endpoint: string = 'http://localhost:8080/rest2ldap/users/';
 
@@ -28,21 +30,28 @@ export class UserSearch {
   }
 
   public getUser() {
-    return this._results;
+    return this._user;
   }
 
-  public query(credentials: UserCredentials) {
+  public isUserAuthenticated() {
+    console.info('User is authenticated', this._authenticated);
+    return this._authenticated;
+  }
+
+  public login(credentials: UserCredentials) {
     const headers = new Headers({
       'X-Username': credentials.username || '',
       'X-Password': credentials.password || ''
     });
 
-    console.log('UserAuth#login(): Get Data', headers, credentials);
+    console.log('UserAuthService#login(): Get Data', headers, credentials);
 
     return this.http.get(`${this._endpoint}${credentials.username}`, { headers: headers })
         .map(res => {
           const response = res.json();
-          return this._results = response;
+
+          this._authenticated = true;
+          return this._user = response;
         })
         .catch(this._handleError);
   }

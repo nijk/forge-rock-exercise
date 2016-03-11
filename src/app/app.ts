@@ -7,7 +7,7 @@ import {FORM_PROVIDERS} from 'angular2/common';
 
 import {RouterActive} from './directives/router-active';
 import { Auth } from './auth/auth.component';
-import { UserAuth } from './user/services/user-auth';
+import { UserAuthService } from './user/services/user-auth.service';
 import { UserMessagesService } from './components/user-messages.service';
 
 
@@ -19,7 +19,7 @@ import { UserMessagesService } from './components/user-messages.service';
   selector: 'app',
   providers: [
     ...FORM_PROVIDERS,
-    UserAuth,
+    UserAuthService,
     UserMessagesService
   ],
   directives: [
