@@ -50,10 +50,11 @@ export class Auth implements OnInit {
         this._userAuthService.login(this.model).subscribe(
             data => {
                 this._userMessagesService.clearMessages();
-                console.log('Authenticated', this.model, this._userAuthService.getUser(), data);
+                console.log('User Authenticated:', this._userAuthService.isUserAuthenticated());
             },
             e => {
                 this._userMessagesService.addMessage(<string>e, 'danger');
+                console.log('User Authenticated:', this._userAuthService.isUserAuthenticated());
             }
         );
     }
