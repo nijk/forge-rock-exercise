@@ -41,11 +41,6 @@ export class Search implements OnInit {
 
     logicalOperators: Object[] = this._createLogicalOperators();
 
-    /**
-     * Create a query model by cloning the defaultQuery object
-     */
-    model: SearchQuery[] = [ Object.create(this._defaultQuery) ];
-
     private _defaultQuery: SearchQuery = {
         search: '',
         operator: SearchOperators['co'],
@@ -53,6 +48,11 @@ export class Search implements OnInit {
     };
 
     private _defaultLogicalQuery: SearchQuery = { operator: SearchOperators['and'], logical: true };
+
+    /**
+     * Create a query model by cloning the defaultQuery object
+     */
+    model: SearchQuery[] = [ Object.create(this._defaultQuery) ];
 
     ngOnInit() {
         if (!this._userAuthService.isUserAuthenticated()) {
