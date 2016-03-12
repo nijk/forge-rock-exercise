@@ -26,7 +26,14 @@ import { UserMessagesService } from './components/user-messages.service';
     ...ROUTER_DIRECTIVES,
     RouterActive
   ],
-  styles: [],
+  styles: [`
+    .navbar {
+      border-radius: 0;
+    }
+    .main-container {
+      margin: 20px;
+    }
+  `],
   template: require('./app.html')
 })
 @RouteConfig([

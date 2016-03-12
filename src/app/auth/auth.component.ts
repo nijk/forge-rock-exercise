@@ -42,6 +42,7 @@ export class Auth implements OnInit {
     model: UserCredentials = { username: '', password: '' };
 
     ngOnInit() {
+        this._userMessagesService.clearMessages();
     }
 
     public getUser() {

@@ -13,7 +13,7 @@ import { UserMessagesService } from "../components/user-messages.service";
 
 // Interfaces
 import { UserItem } from '../user/user-item';
-import { SearchQuery, SearchOperators } from '../search/search-query';
+import { SearchQuery, SearchOperators, SearchFields, SearchFieldNames } from '../search/search-query';
 
 // Components
 import { Auth } from '../auth/auth.component';
@@ -39,7 +39,24 @@ export class Search implements OnInit {
 
     }
 
+    private _defaultQuery: SearchQuery = {
+        search: '',
+        operator: SearchOperators['co'],
+        field: SearchFieldNames['displayName']
+    };
+
+    private _defaultLogicalQuery: SearchQuery = { operator: SearchOperators['and'], logical: true };
+
     results: UserItem[] = [];
+
+    fields: Object[] = [
+        { value: SearchFieldNames['displayName'], label: 'Display name' },
+        { value: SearchFieldNames['name/givenName'], label: 'First name' },
+        { value: SearchFieldNames['name/familyName'], label: 'Surname' },
+        { value: SearchFieldNames['contactInformation/emailAddress'], label: 'Email address' },
+        { value: SearchFieldNames['contactInformation/telephoneNumber'], label: 'Telephone number' }
+    ];
+
     operators: Object[] = [
         { value: SearchOperators['sw'], label: 'starts with' },
         { value: SearchOperators['co'], label: 'contains' },
@@ -51,24 +68,22 @@ export class Search implements OnInit {
         { value: SearchOperators['or'], label: 'or' }
     ];
 
-    query: SearchQuery[] = [
-        { search: 'a', operator: SearchOperators['co'] }
-    ];
 
-    errorMessage: string = '';
+    query: SearchQuery[] = [ Object.create(this._defaultQuery) ];
 
     ngOnInit() {
-
-        console.info('Initial Query', this.query);
-
         if (!this._userAuthService.isUserAuthenticated()) {
             console.warn('User not authenticated, redirecting');
             return this._router.navigate(['Login']);
         }
     }
 
-    addAnother() {
-        this.query.push({ operator: SearchOperators['and'], logical: true }, { search: '', operator: SearchOperators['co'] })
+    public addAnother() {
+        this.query.push( Object.create(this._defaultLogicalQuery), Object.create(this._defaultQuery) );
+    }
+
+    public change() {
+        console.info('Model', this.query);
     }
 
     public submit() {
@@ -81,7 +96,6 @@ export class Search implements OnInit {
                 this._userMessagesService.addMessage(`${data.resultCount} results found`, messageType, false);
 
                 this.results = data.result;
-                console.log('Search', this.query, data);
             },
             e => this._userMessagesService.addMessage(<string>e, 'danger', false)
         );

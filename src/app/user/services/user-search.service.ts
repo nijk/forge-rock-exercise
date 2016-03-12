@@ -11,7 +11,7 @@ import { UserBaseService } from './user.base.service';
 // Interfaces
 import { UserItem } from '../../user/user-item';
 import { UserCredentials } from '../../user/user-credentials';
-import { SearchQuery, SearchOperators } from '../../search/search-query';
+import { SearchQuery, SearchOperators, SearchFieldNames } from '../../search/search-query';
 
 @Injectable()
 export class UserSearchService extends UserBaseService {
@@ -66,20 +66,16 @@ export class UserSearchService extends UserBaseService {
       let op = '';
       let search = '';
 
-      // If the search field is empty get out quick
       if ('' === curr.search) {
+        // Empty search field
         return prev;
-      }
-
-      if (curr.logical) {
-        op = SearchOperators[curr.operator];
+      } else if (curr.logical) {
+        // Logical operator: and/or
+        return prev + SearchOperators[curr.operator];
       } else {
-        field = 'name/familyName';
-        op = SearchOperators[curr.operator];
-        search = `\"${curr.search}\"`;
+        // Search string, e.g: displayName eq "nijk"
+        return prev + ` ${SearchFieldNames[curr.field]} ${SearchOperators[curr.operator]} \"${curr.search}\" `;
       }
-
-      return prev + `${field} ${op} ${search} `;
     }, '').trim();
   }
 
