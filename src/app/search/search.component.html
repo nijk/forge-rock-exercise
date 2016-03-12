@@ -4,51 +4,55 @@
     <fieldset class="form-group">
         <label>Search</label>
         <div *ngFor="#item of model; #i = index; #last = last" class="form-inline">
-            <label *ngIf="!item.logical">
-                <span class="sr-only">Field</span>
-                <select
-                    ngControl="search-field-{{i}}"
-                    [(ngModel)]="item.field"
-                    id="search-field-{{i}}"
-                    class="form-control"
-                >
-                    <option *ngFor="#f of fields" [value]="f.value">{{f.label}}</option>
-                </select>
-            </label>
-            <label *ngIf="!item.logical">
-                <span class="sr-only">Operator</span>
-                <select
-                    ngControl="search-operator-{{i}}"
-                    [(ngModel)]="item.operator"
-                    id="search-operator-{{i}}"
-                    class="form-control"
-                >
-                    <option *ngFor="#o of operators" [value]="o.value">{{o.label}}</option>
-                </select>
-            </label>
-            <label *ngIf="!item.logical">
-                <span class="sr-only">Value</span>
-                <input
-                    (change)="change()"
-                    ngControl="search-{{i}}"
-                    [(ngModel)]="item.search"
-                    type="text"
-                    id="search-{{i}}"
-                    class="form-control"
-                >
-            </label>
-            <label *ngIf="item.logical">
-                <span class="sr-only">And/Or</span>
-                <select
-                    ngControl="search-logical-operator-{{i}}"
-                    [(ngModel)]="item.operator"
-                    id="search-logical-operator-{{i}}"
-                    class="form-control"
-                >
-                    <option *ngFor="#lo of logicalOperators" [value]="lo.value">{{lo.label}}</option>
-                </select>
-            </label>
-            <button *ngIf="last" (click)="addAnother()" class="btn btn-link">Add another</button>
+            <div *ngIf="!item.logical" class="well well-sm">
+                <label>
+                    <span class="sr-only">Field</span>
+                    <select
+                        ngControl="search-field-{{i}}"
+                        [(ngModel)]="item.field"
+                        id="search-field-{{i}}"
+                        class="form-control"
+                    >
+                        <option *ngFor="#f of fields" [value]="f.value">{{f.label}}</option>
+                    </select>
+                </label>
+                <label>
+                    <span class="sr-only">Operator</span>
+                    <select
+                        ngControl="search-operator-{{i}}"
+                        [(ngModel)]="item.operator"
+                        id="search-operator-{{i}}"
+                        class="form-control"
+                    >
+                        <option *ngFor="#o of operators" [value]="o.value">{{o.label}}</option>
+                    </select>
+                </label>
+                <label>
+                    <span class="sr-only">Value</span>
+                    <input
+                        (change)="change()"
+                        ngControl="search-{{i}}"
+                        [(ngModel)]="item.search"
+                        type="text"
+                        id="search-{{i}}"
+                        class="form-control"
+                    >
+                </label>
+                <button *ngIf="last" (click)="addAnother()" class="btn btn-link">Add another</button>
+            </div>
+            <div *ngIf="item.logical" class="well well-sm">
+                <label>
+                    <span class="sr-only">And/Or</span>
+                    <select
+                        ngControl="search-logical-operator-{{i}}"
+                        [(ngModel)]="item.operator"
+                        id="search-logical-operator-{{i}}"
+                        class="form-control"
+                    >
+                        <option *ngFor="#lo of logicalOperators" [value]="lo.value">{{lo.label}}</option>
+                    </select>
+                </label>
+            </div>
         </div>
     </fieldset>
     <fieldset class="form-group">

@@ -1,0 +1,16 @@
+.navbar {
+    border-radius: 0;
+}
+
+.main-container {
+    margin: 20px;
+}
+
+.form-inline .well {
+    display: inline-block;
+}
+
+.well label {
+    margin-top: 0;
+    margin-bottom: 0;
+}
