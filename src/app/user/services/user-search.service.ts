@@ -9,7 +9,7 @@ import { Observable } from 'rxjs/Observable';
 // Interfaces
 import { UserItem } from '../../user/user-item';
 import { UserCredentials } from '../../user/user-credentials';
-import { SearchQuery, SearchOperators, SearchFieldNames } from '../../search/search-query';
+import { SearchFilter, SearchFilterOperators, SearchFilterFieldNames } from '../../search/search-filter';
 
 // Services
 import { UserBaseService } from './user.base.service';
@@ -26,7 +26,7 @@ export class UserSearchService extends UserBaseService {
     return this._users;
   }
 
-  public query(search: SearchQuery[], credentials: UserCredentials) {
+  public query(search: SearchFilter[], credentials: UserCredentials) {
     const queryFilter = this._concatenateSearch(search);
 
     if (!queryFilter.length) {
@@ -47,7 +47,7 @@ export class UserSearchService extends UserBaseService {
     });
   }
 
-  private _concatenateSearch(search: SearchQuery[]) {
+  private _concatenateSearch(search: SearchFilter[]) {
     let result = [];
 
     search.forEach((item, index) => {
@@ -64,10 +64,10 @@ export class UserSearchService extends UserBaseService {
         return prev;
       } else if (curr.logical) {
         // Logical operator: and/or
-        return prev + SearchOperators[curr.operator];
+        return prev + SearchFilterOperators[curr.operator];
       } else {
         // Search string, e.g: displayName sw "nijk"
-        return prev + ` ${SearchFieldNames[curr.field]} ${SearchOperators[curr.operator]} \"${curr.search}\" `;
+        return prev + ` ${SearchFilterFieldNames[curr.field]} ${SearchFilterOperators[curr.operator]} \"${curr.search}\" `;
       }
     }, '').trim();
   }

@@ -2,7 +2,7 @@
  * Created by nijk on 11/03/2016.
  */
 
-export interface SearchFields {
+export interface SearchFilterFields {
     contactInformation?: {
         emailAddress: string,
         telephoneNumber: string
@@ -15,7 +15,7 @@ export interface SearchFields {
     userName?: string
 }
 
-export enum SearchFieldNames {
+export enum SearchFilterFieldNames {
     'contactInformation/emailAddress',
     'contactInformation/telephoneNumber',
     'displayName',
@@ -24,7 +24,7 @@ export enum SearchFieldNames {
     'userName'
 }
 
-export enum SearchOperators {
+export enum SearchFilterOperators {
     sw,
     co,
     eq,
@@ -32,9 +32,9 @@ export enum SearchOperators {
     or
 }
 
-export interface SearchQuery {
+export interface SearchFilter {
     logical?: boolean,
-    field?: SearchFields,
+    field?: SearchFilterFields,
     search?: string,
-    operator: SearchOperators,
+    operator: SearchFilterOperators,
 }

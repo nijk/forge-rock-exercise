@@ -13,7 +13,7 @@ import { UserMessagesService } from "../components/user-messages.service";
 
 // Interfaces
 import { UserItem } from '../user/user-item';
-import { SearchQuery, SearchOperators, SearchFields, SearchFieldNames } from '../search/search-query';
+import { SearchFilter, SearchFilterOperators, SearchFilterFields, SearchFilterFieldNames } from './search-filter';
 
 // Components
 import { Auth } from '../auth/auth.component';
@@ -41,18 +41,18 @@ export class Search implements OnInit {
 
     logicalOperators: Object[] = this._createLogicalOperators();
 
-    private _defaultQuery: SearchQuery = {
+    private _defaultFilter: SearchFilter = {
         search: '',
-        operator: SearchOperators['co'],
-        field: SearchFieldNames['displayName']
+        operator: SearchFilterOperators['co'],
+        field: SearchFilterFieldNames['displayName']
     };
 
-    private _defaultLogicalQuery: SearchQuery = { operator: SearchOperators['and'], logical: true };
+    private _defaultLogicalFilter: SearchFilter = { operator: SearchFilterOperators['and'], logical: true };
 
     /**
      * Create a query model by cloning the defaultQuery object
      */
-    model: SearchQuery[] = [ Object.create(this._defaultQuery) ];
+    model: SearchFilter[] = [ Object.create(this._defaultFilter) ];
 
     ngOnInit() {
         if (!this._userAuthService.isUserAuthenticated()) {
@@ -66,7 +66,7 @@ export class Search implements OnInit {
      * Pushes logicalQuery (operator) and searchQuery objects to the model.
      */
     public addAnother() {
-        this.model.push( Object.create(this._defaultLogicalQuery), Object.create(this._defaultQuery) );
+        this.model.push( Object.create(this._defaultLogicalFilter), Object.create(this._defaultFilter) );
     }
 
     /**
@@ -88,26 +88,26 @@ export class Search implements OnInit {
     
     private _createFields() {
         return [
-            { value: SearchFieldNames['displayName'], label: 'Display name' },
-            { value: SearchFieldNames['name/givenName'], label: 'First name' },
-            { value: SearchFieldNames['name/familyName'], label: 'Surname' },
-            { value: SearchFieldNames['contactInformation/emailAddress'], label: 'Email address' },
-            { value: SearchFieldNames['contactInformation/telephoneNumber'], label: 'Telephone number' }
+            { value: SearchFilterFieldNames['displayName'], label: 'Display name' },
+            { value: SearchFilterFieldNames['name/givenName'], label: 'First name' },
+            { value: SearchFilterFieldNames['name/familyName'], label: 'Surname' },
+            { value: SearchFilterFieldNames['contactInformation/emailAddress'], label: 'Email address' },
+            { value: SearchFilterFieldNames['contactInformation/telephoneNumber'], label: 'Telephone number' }
         ];
     }
     
     private _createOperators() {
         return [
-            { value: SearchOperators['sw'], label: 'starts with' },
-            { value: SearchOperators['co'], label: 'contains' },
-            { value: SearchOperators['eq'], label: 'equals' }
+            { value: SearchFilterOperators['sw'], label: 'starts with' },
+            { value: SearchFilterOperators['co'], label: 'contains' },
+            { value: SearchFilterOperators['eq'], label: 'equals' }
         ]; 
     }
     
     private _createLogicalOperators() {
         return [
-            { value: SearchOperators['and'], label: 'and' },
-            { value: SearchOperators['or'], label: 'or' }
+            { value: SearchFilterOperators['and'], label: 'and' },
+            { value: SearchFilterOperators['or'], label: 'or' }
         ];
     }
 }
