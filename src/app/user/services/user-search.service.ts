@@ -6,12 +6,13 @@ import { Injectable, Optional } from 'angular2/core';
 import { Http, URLSearchParams } from 'angular2/http';
 import { Observable } from 'rxjs/Observable';
 
-import { UserBaseService } from './user.base.service';
-
 // Interfaces
 import { UserItem } from '../../user/user-item';
 import { UserCredentials } from '../../user/user-credentials';
 import { SearchQuery, SearchOperators, SearchFieldNames } from '../../search/search-query';
+
+// Services
+import { UserBaseService } from './user.base.service';
 
 @Injectable()
 export class UserSearchService extends UserBaseService {
@@ -44,8 +45,6 @@ export class UserSearchService extends UserBaseService {
           e => observer.error(e)
       )
     });
-
-
   }
 
   private _concatenateSearch(search: SearchQuery[]) {
@@ -59,13 +58,7 @@ export class UserSearchService extends UserBaseService {
       }
     });
 
-    console.info('concat search', result);
-
     return result.reduce((prev, curr) => {
-      let field = '';
-      let op = '';
-      let search = '';
-
       if ('' === curr.search) {
         // Empty search field
         return prev;
@@ -73,10 +66,9 @@ export class UserSearchService extends UserBaseService {
         // Logical operator: and/or
         return prev + SearchOperators[curr.operator];
       } else {
-        // Search string, e.g: displayName eq "nijk"
+        // Search string, e.g: displayName sw "nijk"
         return prev + ` ${SearchFieldNames[curr.field]} ${SearchOperators[curr.operator]} \"${curr.search}\" `;
       }
     }, '').trim();
   }
-
 }

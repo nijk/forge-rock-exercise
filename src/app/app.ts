@@ -17,15 +17,8 @@ import { UserMessagesService } from './components/user-messages.service';
  */
 @Component({
   selector: 'app',
-  providers: [
-    ...FORM_PROVIDERS,
-    UserAuthService,
-    UserMessagesService
-  ],
-  directives: [
-    ...ROUTER_DIRECTIVES,
-    RouterActive
-  ],
+  providers: [ ...FORM_PROVIDERS, UserAuthService, UserMessagesService ],
+  directives: [ ...ROUTER_DIRECTIVES, RouterActive ],
   styles: [`
     .navbar {
       border-radius: 0;

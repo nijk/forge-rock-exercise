@@ -5,6 +5,7 @@
 import { Component, Injectable } from 'angular2/core';
 import { Alert } from 'ng2-bootstrap';
 
+// Services
 import { UserMessagesService } from "./user-messages.service";
 
 @Component({

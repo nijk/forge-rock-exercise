@@ -18,25 +18,14 @@ import { UserMessages } from '../components/user-messages';
 
 @Component({
     selector: 'auth',
-    providers: [],
-    directives: [
-        CORE_DIRECTIVES,
-        FORM_DIRECTIVES,
-        UserMessages
-    ],
-    template: require('./auth.component.html'),
-    styles: [`
-        body {
-          padding: 20px;
-        }
-    `]
+    directives: [ CORE_DIRECTIVES, FORM_DIRECTIVES, UserMessages ],
+    template: require('./auth.component.html')
 })
 export class Auth implements OnInit {
     constructor(
         private _userAuthService: UserAuthService,
         private _userMessagesService: UserMessagesService,
         private _router: Router) {
-
     }
 
     model: UserCredentials = { username: '', password: '' };
@@ -53,19 +42,18 @@ export class Auth implements OnInit {
         return this._userAuthService.isUserAuthenticated();
     }
 
+    /**
+     * Form submit handler
+     */
     public submit() {
         this._userAuthService.login(this.model).subscribe(
             data => {
                 this._userMessagesService.clearMessages();
-                //console.log('User Authenticated:', this._userAuthService.isUserAuthenticated());
                 return this._router.navigate(['Search']);
             },
             e => {
                 this._userMessagesService.addMessage(<string>e, 'danger');
-                //console.log('User Authenticated:', this._userAuthService.isUserAuthenticated());
             }
         );
     }
 }
-
-

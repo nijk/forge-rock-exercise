@@ -4,8 +4,9 @@
 
 import { Http, Response, Headers, URLSearchParams } from 'angular2/http';
 import { Observable } from 'rxjs/Observable';
-import {UserCredentials} from "../user-credentials";
 
+// Interfaces
+import {UserCredentials} from "../user-credentials";
 
 export abstract class UserBaseService {
   constructor(public http: Http) {
@@ -13,14 +14,13 @@ export abstract class UserBaseService {
 
   private _endpoint: string = 'http://localhost:8080/rest2ldap/';
 
-  private _handleError (error: Response) {
-    const defaultErrorMessage: Object = { message: 'Server error' };
-    const errorMessage = (error.json() || defaultErrorMessage).message;
-
-    console.error(errorMessage, error.json());
-    return Observable.throw(new Error(errorMessage));
-  }
-
+  /**
+   * Send API call to endpoint with Headers & Parameters.
+   * @param path
+   * @param credentials
+   * @param search
+   * @returns {Observable<R>}
+   */
   protected send(path: string, credentials: UserCredentials, search?: URLSearchParams) {
     const params: Object = {};
     params['headers'] = new Headers({
@@ -32,11 +32,21 @@ export abstract class UserBaseService {
       params['search'] = search;
     }
 
-    console.log('UserBaseService#send(): Params', params);
-
     return this.http.get(`${this._endpoint}${path}`, params)
         .map(res => res.json())
         .catch(this._handleError);
   }
 
+  /**
+   * Error handler
+   * @param error
+   * @returns {ErrorObservable}
+   * @private
+   */
+  private _handleError (error: Response) {
+    const errorMessage = (error.json() ||  { message: 'Server error' }).message;
+
+    console.error(errorMessage, error.json());
+    return Observable.throw(new Error(errorMessage));
+  }
 }

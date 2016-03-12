@@ -6,10 +6,13 @@ import { Injectable, Optional } from 'angular2/core';
 import { Http, Response, Headers } from 'angular2/http';
 import { Observable } from 'rxjs/Observable';
 
-import { UserBaseService } from './user.base.service';
-
+// Interfaces
 import { UserItem } from '../../user/user-item';
 import { UserCredentials } from "../../user/user-credentials";
+
+// Services
+import { UserBaseService } from './user.base.service';
+
 
 @Injectable()
 export class UserAuthService extends UserBaseService {
@@ -18,11 +21,12 @@ export class UserAuthService extends UserBaseService {
   }
 
   private _user: UserItem;
-  private _userCredentials: UserCredentials = {
+
+  private _userCredentials: UserCredentials/* = {
     // @fixme: remove hardcoded creds
     username: 'user.0',
     password: 'password'
-  };
+  }*/;
 
   public getUser() {
     return this._user;
@@ -33,17 +37,12 @@ export class UserAuthService extends UserBaseService {
   }
 
   public isUserAuthenticated() {
-    //return !!this._user;
-    return true; // @fixme: remove this!
+    return !!this._user;/*true;*/ // @fixme: remove this!
   }
 
   public login(credentials: UserCredentials) {
-    const path = `users/${credentials.username}`;
-
-    console.log('UserAuthService#login(): Get Data', credentials);
-
     return Observable.create(observer => {
-      this.send(path, credentials).subscribe(
+      this.send(`users/${credentials.username}`, credentials).subscribe(
           json => {
             this._user = json;
             this._userCredentials = credentials;
