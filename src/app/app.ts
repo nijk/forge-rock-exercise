@@ -42,8 +42,8 @@ import { UserMessagesService } from './components/user-messages.service';
     loader: () => require('es6-promise!./search/search.component')('Search'),
     name: 'Search',
     useAsDefault: true
-  },
-  { path: '/**', redirectTo: ['Search'] }
+  }/*,
+  { path: '/', redirectTo: ['Search'] }*/
 ])
 export class App {
   name = 'ForgeRock';

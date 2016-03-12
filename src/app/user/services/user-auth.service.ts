@@ -18,7 +18,11 @@ export class UserAuthService extends UserBaseService {
   }
 
   private _user: UserItem;
-  private _userCredentials: UserCredentials;
+  private _userCredentials: UserCredentials = {
+    // @fixme: remove hardcoded creds
+    username: 'user.0',
+    password: 'password'
+  };
 
   public getUser() {
     return this._user;
@@ -29,7 +33,8 @@ export class UserAuthService extends UserBaseService {
   }
 
   public isUserAuthenticated() {
-    return !!this._user;
+    //return !!this._user;
+    return true; // @fixme: remove this!
   }
 
   public login(credentials: UserCredentials) {

@@ -26,39 +26,61 @@ export class UserSearchService extends UserBaseService {
   }
 
   public query(search: SearchQuery[], credentials: UserCredentials) {
-    let queryFilter = '';
+    const queryFilter = this._concatenateSearch(search);
 
-    queryFilter = search.reduce((prev, curr) => {
-      let field = '';
-      let op = '';
-      let search = '';
-      if (curr.operator && curr.search) {
-        field = 'name/familyName';
-        op = SearchOperators[curr.operator];
-        search = `\"${curr.search}\"`;
-      } else if (curr.operator && !curr.search) {
-        op = SearchOperators[curr.operator];
-      }
-
-      return prev + `${field} ${op} ${search} `;
-    }, queryFilter).trim();
-
-    // @todo: loop through searchQuery and generate the queryFilter
+    if (!queryFilter.length) {
+      return Observable.throw('Nothing to search');
+    }
 
     const params = new URLSearchParams();
     params.set('_queryFilter', queryFilter);
-
-    console.log('UserSearchService#query(): search', search, queryFilter);
 
     return Observable.create(observer => {
       this.send('users', credentials, params).subscribe(
           json => {
             this._users = json;
-            observer.next(this._users);
+            observer.next(this.getUsers());
           },
           e => observer.error(e)
       )
     });
+
+
+  }
+
+  private _concatenateSearch(search: SearchQuery[]) {
+    let result = [];
+
+    search.forEach((item, index) => {
+      if ('' !== item.search) {
+        result.push(item);
+      } else if (index > 0) {
+        result.pop();
+      }
+    });
+
+    console.info('concat search', result);
+
+    return result.reduce((prev, curr) => {
+      let field = '';
+      let op = '';
+      let search = '';
+
+      // If the search field is empty get out quick
+      if ('' === curr.search) {
+        return prev;
+      }
+
+      if (curr.logical) {
+        op = SearchOperators[curr.operator];
+      } else {
+        field = 'name/familyName';
+        op = SearchOperators[curr.operator];
+        search = `\"${curr.search}\"`;
+      }
+
+      return prev + `${field} ${op} ${search} `;
+    }, '').trim();
   }
 
 }

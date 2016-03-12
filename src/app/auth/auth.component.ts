@@ -6,11 +6,15 @@ import { Component, OnInit } from 'angular2/core';
 import { CORE_DIRECTIVES, FORM_DIRECTIVES } from 'angular2/common';
 import { Router } from 'angular2/router';
 
-import { UserAuthService } from '../user/services/user-auth.service';
+// Interfaces
 import { UserCredentials } from '../user/user-credentials';
 
-import { UserMessages } from '../components/user-messages';
+// Services
+import { UserAuthService } from '../user/services/user-auth.service';
 import { UserMessagesService } from "../components/user-messages.service";
+
+// Components
+import { UserMessages } from '../components/user-messages';
 
 @Component({
     selector: 'auth',

@@ -32,6 +32,6 @@ export class UserMessagesService {
     }
 
     public clearMessages() {
-        this.messages = [];
+        this.messages.splice(0, this.messages.length);
     }
 }

@@ -13,17 +13,19 @@ import { UserMessagesService } from "../components/user-messages.service";
 
 // Interfaces
 import { UserItem } from '../user/user-item';
-import { SearchQuery, SearchOperators, SearchOperands } from '../search/search-query';
+import { SearchQuery, SearchOperators } from '../search/search-query';
 
 // Components
 import { Auth } from '../auth/auth.component';
+import { UserMessages } from '../components/user-messages';
 
 @Component({
     selector: 'auth',
     providers: [ UserSearchService ],
     directives: [
         CORE_DIRECTIVES,
-        FORM_DIRECTIVES
+        FORM_DIRECTIVES,
+        UserMessages
     ],
     template: require('./search.component.html')
 })
@@ -38,11 +40,19 @@ export class Search implements OnInit {
     }
 
     results: UserItem[] = [];
+    operators: Object[] = [
+        { value: SearchOperators['sw'], label: 'starts with' },
+        { value: SearchOperators['co'], label: 'contains' },
+        { value: SearchOperators['eq'], label: 'equals' }
+    ];
+
+    logicalOperators: Object[] = [
+        { value: SearchOperators['and'], label: 'and' },
+        { value: SearchOperators['or'], label: 'or' }
+    ];
 
     query: SearchQuery[] = [
-        { search: 'a', operator: SearchOperators['co'] },
-        { operator: SearchOperators['and'] },
-        { search: 'b', operator: SearchOperators['co'] }
+        { search: 'a', operator: SearchOperators['co'] }
     ];
 
     errorMessage: string = '';
@@ -57,17 +67,23 @@ export class Search implements OnInit {
         }
     }
 
+    addAnother() {
+        this.query.push({ operator: SearchOperators['and'], logical: true }, { search: '', operator: SearchOperators['co'] })
+    }
+
     public submit() {
+        this._userMessagesService.clearMessages();
         const credentials = this._userAuthService.getUserCredentials();
+
         this._userSearchService.query(this.query, credentials).subscribe(
             data => {
-                this._userMessagesService.clearMessages();
+                const messageType = (!!data.resultCount) ? 'success' : 'warning';
+                this._userMessagesService.addMessage(`${data.resultCount} results found`, messageType, false);
+
                 this.results = data.result;
                 console.log('Search', this.query, data);
             },
-            e => this._userMessagesService.addMessage(<string>e, 'danger')
+            e => this._userMessagesService.addMessage(<string>e, 'danger', false)
         );
     }
 }
-
-

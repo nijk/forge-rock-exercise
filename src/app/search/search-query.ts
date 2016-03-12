@@ -10,16 +10,8 @@ export enum SearchOperators {
     or
 }
 
-export enum SearchOperands {
-    and,
-    or
-}
-
 export interface SearchQuery {
+    logical?: boolean,
     search?: string,
     operator: SearchOperators
-}
-
-export interface SearchOperand {
-    operand: SearchOperands
 }
