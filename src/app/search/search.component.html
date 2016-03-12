@@ -3,7 +3,7 @@
 <form (ngSubmit)="submit()" class="jumbotron">
     <fieldset class="form-group">
         <label>Search</label>
-        <div *ngFor="#item of query; #i = index; #last = last" class="form-inline">
+        <div *ngFor="#item of model; #i = index; #last = last" class="form-inline">
             <label *ngIf="!item.logical">
                 <span class="sr-only">Field</span>
                 <select
