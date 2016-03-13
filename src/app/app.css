@@ -1,20 +1,53 @@
 .navbar {
+    margin-bottom: 0;
     border-radius: 0;
 }
 
-.main-container {
-    margin: 20px;
+.container-fluid .jumbotron {
+    padding-top: 20px;
+    padding-bottom: 20px;
 }
 
-.form-inline .well {
-    display: inline-block;
+@media screen and (min-width: 768px) {
+    .container-fluid .jumbotron {
+        padding-left: 24px;
+        padding-right: 24px;
+    }
 }
 
-.well label {
-    margin-top: 0;
-    margin-bottom: 0;
+.well {
+    max-width: 630px;
+}
+
+.well .form-inline{
+    margin-bottom: -5px;
+}
+
+.well.filter-logical {
+    background-color: transparent;
+    border-style: dashed;
+    border-width: 2px;
+    box-shadow: none;
+    text-align: center;
 }
 
 .well-sm {
     margin-bottom: 10px;
+}
+
+.thumbnail {
+    height: 150px;
+    overflow: auto;
+}
+
+.thumbnail h3 {
+    margin-top: 0;
+}
+
+.thumbnail .glyphicon {
+    margin-right: 5px;
+}
+
+.thumbnail .caption :last-child {
+    margin-bottom: 0;
 }

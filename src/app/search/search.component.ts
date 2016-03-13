@@ -18,11 +18,12 @@ import { SearchFilter, SearchFilterOperators, SearchFilterFields, SearchFilterFi
 // Components
 import { Auth } from '../auth/auth.component';
 import { UserMessages } from '../components/user-messages';
+import { UserCard } from "../components/user-card";
 
 @Component({
     selector: 'auth',
     providers: [ UserSearchService ],
-    directives: [ CORE_DIRECTIVES, FORM_DIRECTIVES, UserMessages ],
+    directives: [ CORE_DIRECTIVES, FORM_DIRECTIVES, UserMessages, UserCard ],
     template: require('./search.component.html')
 })
 export class Search implements OnInit {
@@ -50,9 +51,9 @@ export class Search implements OnInit {
     private _defaultLogicalFilter: SearchFilter = { operator: SearchFilterOperators['and'], logical: true };
 
     /**
-     * Create a query model by cloning the defaultQuery object
+     * Create a filters array by cloning the defaultFilter object
      */
-    model: SearchFilter[] = [ Object.create(this._defaultFilter) ];
+    filters: SearchFilter[] = [ Object.create(this._defaultFilter) ];
 
     ngOnInit() {
         if (!this._userAuthService.isUserAuthenticated()) {
@@ -62,11 +63,11 @@ export class Search implements OnInit {
     }
 
     /**
-     * Add new searchQuery objects to the model.
-     * Pushes logicalQuery (operator) and searchQuery objects to the model.
+     * Add new searchFilter objects to the filter.
+     * Pushes logicalFilter (operator) and searchFilter objects to the filters array.
      */
     public addAnother() {
-        this.model.push( Object.create(this._defaultLogicalFilter), Object.create(this._defaultFilter) );
+        this.filters.push( Object.create(this._defaultLogicalFilter), Object.create(this._defaultFilter) );
     }
 
     /**
@@ -76,7 +77,7 @@ export class Search implements OnInit {
         this._userMessagesService.clearMessages();
         const credentials = this._userAuthService.getUserCredentials();
 
-        this._userSearchService.query(this.model, credentials).subscribe(
+        this._userSearchService.query(this.filters, credentials).subscribe(
             data => {
                 const messageType = (!!data.resultCount) ? 'success' : 'warning';
                 this._userMessagesService.addMessage(`${data.resultCount} results found`, messageType, false);
@@ -89,6 +90,7 @@ export class Search implements OnInit {
     private _createFields() {
         return [
             { value: SearchFilterFieldNames['displayName'], label: 'Display name' },
+            { value: SearchFilterFieldNames['userName'], label: 'User name' },
             { value: SearchFilterFieldNames['name/givenName'], label: 'First name' },
             { value: SearchFilterFieldNames['name/familyName'], label: 'Surname' },
             { value: SearchFilterFieldNames['contactInformation/emailAddress'], label: 'Email address' },

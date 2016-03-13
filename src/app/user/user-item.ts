@@ -7,12 +7,12 @@ export interface UserItem {
     schemas: string[],
     contactInformation: {
         telephoneNumber: string,
-        "emailAddress": string
+        emailAddress: string
     },
     _id: string,
     name: {
         familyName: string,
-        "givenName": string
+        givenName: string
     },
     userName: string,
     displayName: string
