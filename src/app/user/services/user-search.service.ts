@@ -48,27 +48,19 @@ export class UserSearchService extends UserBaseService {
   }
 
   private _concatenateSearch(search: SearchFilter[]) {
-    let result = [];
+    return search
+        .filter((item) => !!(item.search || item.logical)) // SearchFilters with search values or logical operators
+        .reduce((prev, curr, index, arr) => {
+          // Search string, e.g: displayName sw "nijk"
+          if (!curr.logical) {
+            return prev + ` ${SearchFilterFieldNames[<number> curr.field]} ${SearchFilterOperators[<number> curr.operator]} \"${curr.search}\" `;
+          }
+          // Ensure logical operator is not last item or following another logical operator
+          else if (index !== arr.length - 1 && !arr[index - 1].logical) {
+            return prev + SearchFilterOperators[<number> curr.operator];
+          }
 
-    search.forEach((item, index) => {
-      if ('' !== item.search) {
-        result.push(item);
-      } else if (index > 0) {
-        result.pop();
-      }
-    });
-
-    return result.reduce((prev, curr) => {
-      if ('' === curr.search) {
-        // Empty search field
-        return prev;
-      } else if (curr.logical) {
-        // Logical operator: and/or
-        return prev + SearchFilterOperators[curr.operator];
-      } else {
-        // Search string, e.g: displayName sw "nijk"
-        return prev + ` ${SearchFilterFieldNames[curr.field]} ${SearchFilterOperators[curr.operator]} \"${curr.search}\" `;
-      }
-    }, '').trim();
+          return prev;
+        }, '').trim();
   }
 }
