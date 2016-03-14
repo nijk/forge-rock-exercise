@@ -63,6 +63,7 @@ export class UserSearchService extends UserBaseService {
           }
 
           return prev;
-        }, '').trim();
+        }, '')
+        .trim();
   }
 }
