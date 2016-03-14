@@ -29,11 +29,13 @@ To fully complete this project to production standards, the items that I would a
 - Add some visual feedback whilst during API requests, e.g a spinner or loader that indicates the app is waiting on request
 - Limit displayed results and add a pager or infinite scroll behaviour
 - Improve the wording of the API error messages to be more user friendly
+- Configure the backend to support required client side routes, so that users can navigate directly to [http://localhost:8080/test/dist/search]() if authenticated
+- Add a representation of the searchFilter to the client side router so that searches can be bookmarked and shared, e.g. [http://localhost:8080/test/dist/search/first-name/equals/nick/and/email-address/contains/forgerock.com]()
 - Add the appropriate logo, navigation utility (login/logout/account), footer (copyright/terms/privacy & any external links)
 - Add authentication tokens via [JWT](https://jwt.io/) - this requires support via the backend
 - Configure the backend to deliver resources from the `dist/` directory to avoid the need for it as a URL slug
 - Test cross browser/device & fix any issues
-- Provide a `<noscript>` content for browsers where JS is disabled
+- Provide `<noscript>` content for browsers where JS is disabled
 - Minify/Uglify the JS/CSS/HTML resources for smaller payload size
 - Test app performance and make improvements where necessary
 - Adjust/refactor code based on peer feedback
