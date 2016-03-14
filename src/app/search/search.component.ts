@@ -8,8 +8,8 @@ import { Router } from 'angular2/router';
 
 // Services
 import { MessagesService } from "../messages/messages.service.ts";
-import { UserAuthService } from '../auth/auth.service';
-import { UserSearchService } from './search.service';
+import { AuthService } from '../auth/auth.service';
+import { SearchService } from './search.service';
 
 // Interfaces
 import { UserItem } from '../user/user.interfaces';
@@ -25,15 +25,15 @@ import { UserCard } from "../user/user-card.component";
 
 @Component({
     selector: 'auth',
-    providers: [ UserSearchService ],
+    providers: [ SearchService ],
     directives: [ CORE_DIRECTIVES, FORM_DIRECTIVES, Messages, UserCard ],
     template: require('./search.component.html')
 })
 export class Search implements OnInit {
     constructor(
         private _messagesService: MessagesService,
-        private _userAuthService: UserAuthService,
-        private _userSearchService: UserSearchService,
+        private _authService: AuthService,
+        private _searchService: SearchService,
         private _router: Router) {
     }
 
@@ -59,7 +59,7 @@ export class Search implements OnInit {
     filters: SearchFilter[] = [ Object.assign({}, this._defaultFilter) ];
 
     ngOnInit() {
-        if (!this._userAuthService.isUserAuthenticated()) {
+        if (!this._authService.isUserAuthenticated()) {
             console.warn('User not authenticated, redirecting to login');
             return this._router.navigate(['Login']);
         }
@@ -92,9 +92,9 @@ export class Search implements OnInit {
      */
     public submit() {
         this._messagesService.clearMessages();
-        const credentials = this._userAuthService.getUserCredentials();
+        const credentials = this._authService.getUserCredentials();
 
-        return this._userSearchService.query(this.filters, credentials).subscribe(
+        return this._searchService.query(this.filters, credentials).subscribe(
             data => {
                 const messageType = (!!data.resultCount) ? 'success' : 'warning';
                 this._messagesService.addMessage(`${data.resultCount} results found`, messageType, false);

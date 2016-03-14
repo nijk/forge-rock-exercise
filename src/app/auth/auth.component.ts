@@ -10,7 +10,7 @@ import { Router } from 'angular2/router';
 import { UserCredentials } from '../user/user.interfaces';
 
 // Services
-import { UserAuthService } from './auth.service';
+import { AuthService } from './auth.service';
 import { MessagesService } from "../messages/messages.service.ts";
 
 // Components
@@ -23,7 +23,7 @@ import { Messages } from '../messages/messages.component';
 })
 export class Auth implements OnInit {
     constructor(
-        private _userAuthService: UserAuthService,
+        private _userAuthService: AuthService,
         private _userMessagesService: MessagesService,
         private _router: Router) {
     }

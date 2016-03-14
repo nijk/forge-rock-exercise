@@ -7,7 +7,7 @@ import { RouterActive } from './directives/router-active';
 import { FORM_PROVIDERS } from 'angular2/common';
 
 // Services
-import { UserAuthService } from './auth/auth.service';
+import { AuthService } from './auth/auth.service';
 import { MessagesService } from './messages/messages.service.ts';
 
 // Components
@@ -19,7 +19,7 @@ import { Auth } from './auth/auth.component';
  */
 @Component({
   selector: 'app',
-  providers: [ ...FORM_PROVIDERS, UserAuthService, MessagesService ],
+  providers: [ ...FORM_PROVIDERS, AuthService, MessagesService ],
   directives: [ ...ROUTER_DIRECTIVES, RouterActive ],
   encapsulation: ViewEncapsulation.None,
   styles: [ require('./app.css') ],

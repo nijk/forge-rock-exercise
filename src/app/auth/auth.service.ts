@@ -14,7 +14,7 @@ import { UserBaseService } from '../user/user.base.service';
 
 
 @Injectable()
-export class UserAuthService extends UserBaseService {
+export class AuthService extends UserBaseService {
   constructor(public http: Http) {
     super(http);
   }

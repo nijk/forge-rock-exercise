@@ -17,7 +17,7 @@ import { SearchFilterOperators, SearchFilterFieldNames } from './search.enums.ts
 import { UserBaseService } from '../user/user.base.service';
 
 @Injectable()
-export class UserSearchService extends UserBaseService {
+export class SearchService extends UserBaseService {
   constructor(public http: Http) {
     super(http);
   }
