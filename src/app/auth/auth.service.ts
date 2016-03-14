@@ -7,11 +7,10 @@ import { Http, Response, Headers } from 'angular2/http';
 import { Observable } from 'rxjs/Observable';
 
 // Interfaces
-import { UserItem } from '../../user/user-item';
-import { UserCredentials } from "../../user/user-credentials";
+import { UserItem, UserCredentials } from '../user/user.interfaces';
 
 // Services
-import { UserBaseService } from './user.base.service';
+import { UserBaseService } from '../user/user.base.service';
 
 
 @Injectable()
@@ -30,16 +29,16 @@ export class UserAuthService extends UserBaseService {
 
   public getUserCredentials() {
     // @todo: uncomment this for login bypass!
-    return {
+    /*return {
       username: 'user.0',
       password: 'password'
-    };
+    };*/
     return this._userCredentials;
   }
 
   public isUserAuthenticated() {
     // @todo: uncomment this for login bypass!
-    return true;
+    /*return true;*/
     return !!this._user;
   }
 

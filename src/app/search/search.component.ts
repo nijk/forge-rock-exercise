@@ -7,18 +7,21 @@ import { CORE_DIRECTIVES, FORM_DIRECTIVES } from 'angular2/common';
 import { Router } from 'angular2/router';
 
 // Services
-import { UserAuthService } from '../user/services/user-auth.service';
-import { UserSearchService } from '../user/services/user-search.service';
-import { UserMessagesService } from "../components/user-messages.service";
+import { UserMessagesService } from "../messages/messages.service.ts";
+import { UserAuthService } from '../auth/auth.service';
+import { UserSearchService } from './search.service';
 
 // Interfaces
-import { UserItem } from '../user/user-item';
-import { SearchFilter, SearchFilterOperators, SearchFilterFields, SearchFilterFieldNames } from './search-filter';
+import { UserItem } from '../user/user.interfaces';
+import { SearchFilter, SearchFilterFields } from './search.interfaces.ts';
+
+// Enums
+import { SearchFilterOperators, SearchFilterFieldNames } from './search.enums.ts';
 
 // Components
 import { Auth } from '../auth/auth.component';
-import { UserMessages } from '../components/user-messages';
-import { UserCard } from "../components/user-card";
+import { UserMessages } from '../messages/messages.component';
+import { UserCard } from "../user/user-card.component";
 
 @Component({
     selector: 'auth',

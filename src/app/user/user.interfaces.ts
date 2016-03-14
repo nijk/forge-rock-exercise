@@ -17,3 +17,8 @@ export interface UserItem {
     userName: string,
     displayName: string
 }
+
+export interface UserCredentials {
+    username: string;
+    password: string;
+}

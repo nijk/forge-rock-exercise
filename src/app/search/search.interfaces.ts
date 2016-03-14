@@ -2,6 +2,8 @@
  * Created by nijk on 11/03/2016.
  */
 
+import { SearchFilterFieldNames, SearchFilterOperators } from './search.enums.ts';
+
 export interface SearchFilterFields {
     contactInformation?: {
         emailAddress: string,
@@ -13,23 +15,6 @@ export interface SearchFilterFields {
         familyName: string
     },
     userName?: string
-}
-
-export enum SearchFilterFieldNames {
-    'contactInformation/emailAddress',
-    'contactInformation/telephoneNumber',
-    'displayName',
-    'name/givenName',
-    'name/familyName',
-    'userName'
-}
-
-export enum SearchFilterOperators {
-    sw,
-    co,
-    eq,
-    and,
-    or
 }
 
 export interface SearchFilter {

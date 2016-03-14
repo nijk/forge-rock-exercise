@@ -7,12 +7,14 @@ import { Http, URLSearchParams } from 'angular2/http';
 import { Observable } from 'rxjs/Observable';
 
 // Interfaces
-import { UserItem } from '../../user/user-item';
-import { UserCredentials } from '../../user/user-credentials';
-import { SearchFilter, SearchFilterOperators, SearchFilterFieldNames } from '../../search/search-filter';
+import { UserItem, UserCredentials } from '../user/user.interfaces';
+import { SearchFilter, SearchFilterFields } from './search.interfaces.ts';
+
+// Enums
+import { SearchFilterOperators, SearchFilterFieldNames } from './search.enums.ts';
 
 // Services
-import { UserBaseService } from './user.base.service';
+import { UserBaseService } from '../user/user.base.service';
 
 @Injectable()
 export class UserSearchService extends UserBaseService {

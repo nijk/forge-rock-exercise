@@ -7,14 +7,14 @@ import { CORE_DIRECTIVES, FORM_DIRECTIVES } from 'angular2/common';
 import { Router } from 'angular2/router';
 
 // Interfaces
-import { UserCredentials } from '../user/user-credentials';
+import { UserCredentials } from '../user/user.interfaces';
 
 // Services
-import { UserAuthService } from '../user/services/user-auth.service';
-import { UserMessagesService } from "../components/user-messages.service";
+import { UserAuthService } from './auth.service';
+import { UserMessagesService } from "../messages/messages.service.ts";
 
 // Components
-import { UserMessages } from '../components/user-messages';
+import { UserMessages } from '../messages/messages.component';
 
 @Component({
     selector: 'auth',

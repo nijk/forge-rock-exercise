@@ -6,7 +6,7 @@ import { Http, Response, Headers, URLSearchParams } from 'angular2/http';
 import { Observable } from 'rxjs/Observable';
 
 // Interfaces
-import {UserCredentials} from "../user-credentials";
+import { UserCredentials } from "./user.interfaces";
 
 export abstract class UserBaseService {
   constructor(public http: Http) {
