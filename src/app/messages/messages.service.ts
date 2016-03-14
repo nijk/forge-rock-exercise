@@ -12,7 +12,7 @@ enum messageTypes {
 }
 
 @Injectable()
-export class UserMessagesService {
+export class MessagesService {
     constructor() {
     }
 

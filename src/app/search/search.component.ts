@@ -7,7 +7,7 @@ import { CORE_DIRECTIVES, FORM_DIRECTIVES } from 'angular2/common';
 import { Router } from 'angular2/router';
 
 // Services
-import { UserMessagesService } from "../messages/messages.service.ts";
+import { MessagesService } from "../messages/messages.service.ts";
 import { UserAuthService } from '../auth/auth.service';
 import { UserSearchService } from './search.service';
 
@@ -20,19 +20,19 @@ import { SearchFilterOperators, SearchFilterFieldNames } from './search.enums.ts
 
 // Components
 import { Auth } from '../auth/auth.component';
-import { UserMessages } from '../messages/messages.component';
+import { Messages } from '../messages/messages.component';
 import { UserCard } from "../user/user-card.component";
 
 @Component({
     selector: 'auth',
     providers: [ UserSearchService ],
-    directives: [ CORE_DIRECTIVES, FORM_DIRECTIVES, UserMessages, UserCard ],
+    directives: [ CORE_DIRECTIVES, FORM_DIRECTIVES, Messages, UserCard ],
     template: require('./search.component.html')
 })
 export class Search implements OnInit {
     constructor(
+        private _messagesService: MessagesService,
         private _userAuthService: UserAuthService,
-        private _userMessagesService: UserMessagesService,
         private _userSearchService: UserSearchService,
         private _router: Router) {
     }
@@ -60,7 +60,7 @@ export class Search implements OnInit {
 
     ngOnInit() {
         if (!this._userAuthService.isUserAuthenticated()) {
-            console.warn('User not authenticated, redirecting');
+            console.warn('User not authenticated, redirecting to login');
             return this._router.navigate(['Login']);
         }
     }
@@ -91,16 +91,16 @@ export class Search implements OnInit {
      * Form submit handler: User messaging and storage of results set.
      */
     public submit() {
-        this._userMessagesService.clearMessages();
+        this._messagesService.clearMessages();
         const credentials = this._userAuthService.getUserCredentials();
 
         return this._userSearchService.query(this.filters, credentials).subscribe(
             data => {
                 const messageType = (!!data.resultCount) ? 'success' : 'warning';
-                this._userMessagesService.addMessage(`${data.resultCount} results found`, messageType, false);
+                this._messagesService.addMessage(`${data.resultCount} results found`, messageType, false);
                 this.results = data.result;
             },
-            e => this._userMessagesService.addMessage(<string>e, 'danger', false)
+            e => this._messagesService.addMessage(<string> e, 'danger', false)
         );
     }
     

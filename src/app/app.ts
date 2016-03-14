@@ -8,7 +8,7 @@ import { FORM_PROVIDERS } from 'angular2/common';
 
 // Services
 import { UserAuthService } from './auth/auth.service';
-import { UserMessagesService } from './messages/messages.service.ts';
+import { MessagesService } from './messages/messages.service.ts';
 
 // Components
 import { Auth } from './auth/auth.component';
@@ -19,7 +19,7 @@ import { Auth } from './auth/auth.component';
  */
 @Component({
   selector: 'app',
-  providers: [ ...FORM_PROVIDERS, UserAuthService, UserMessagesService ],
+  providers: [ ...FORM_PROVIDERS, UserAuthService, MessagesService ],
   directives: [ ...ROUTER_DIRECTIVES, RouterActive ],
   encapsulation: ViewEncapsulation.None,
   styles: [ require('./app.css') ],

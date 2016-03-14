@@ -6,7 +6,7 @@ import { Component, Injectable } from 'angular2/core';
 import { Alert } from 'ng2-bootstrap';
 
 // Services
-import { UserMessagesService } from "./messages.service.ts";
+import { MessagesService } from "./messages.service.ts";
 
 @Component({
     selector: 'user-messages',
@@ -14,8 +14,8 @@ import { UserMessagesService } from "./messages.service.ts";
     directives: [ Alert ],
     template: require('./messages.component.html')
 })
-export class UserMessages {
-    constructor(public _userMessagesService: UserMessagesService) {
+export class Messages {
+    constructor(public _userMessagesService: MessagesService) {
     }
 
     messages = this._userMessagesService.getMessages();

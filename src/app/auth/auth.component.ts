@@ -11,20 +11,20 @@ import { UserCredentials } from '../user/user.interfaces';
 
 // Services
 import { UserAuthService } from './auth.service';
-import { UserMessagesService } from "../messages/messages.service.ts";
+import { MessagesService } from "../messages/messages.service.ts";
 
 // Components
-import { UserMessages } from '../messages/messages.component';
+import { Messages } from '../messages/messages.component';
 
 @Component({
     selector: 'auth',
-    directives: [ CORE_DIRECTIVES, FORM_DIRECTIVES, UserMessages ],
+    directives: [ CORE_DIRECTIVES, FORM_DIRECTIVES, Messages ],
     template: require('./auth.component.html')
 })
 export class Auth implements OnInit {
     constructor(
         private _userAuthService: UserAuthService,
-        private _userMessagesService: UserMessagesService,
+        private _userMessagesService: MessagesService,
         private _router: Router) {
     }
 
@@ -52,7 +52,7 @@ export class Auth implements OnInit {
                 return this._router.navigate(['Search']);
             },
             e => {
-                this._userMessagesService.addMessage(<string>e, 'danger');
+                this._userMessagesService.addMessage(<string> e, 'danger');
             }
         );
     }
