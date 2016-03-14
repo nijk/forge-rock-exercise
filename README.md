@@ -20,8 +20,8 @@
 
 To fully complete this project to production standards, the items that I would address are:
 
-- Fix the issue with search field focus when adding or removing search form input-groups
-- Change login bypass comments to a config controlled value and ensure usage only in dev environment
+- Fix the issue with search field autofocus, especially when adding or removing search form input-groups
+- Change login bypass comments to a config controlled value and ensure usage only in dev environment. This has been left as-is for developer/tester convenience only 
 - Unit testing
 - End 2 end testing
 - Break down some of the larger components into sub-components, e.g search form input-groups
@@ -32,7 +32,7 @@ To fully complete this project to production standards, the items that I would a
 - Add the appropriate logo, navigation utility (login/logout/account), footer (copyright/terms/privacy & any external links)
 - Add authentication tokens via [JWT](https://jwt.io/) - this requires support via the backend
 - Configure the backend to deliver resources from the `dist/` directory to avoid the need for it as a URL slug
-- Test cross browser & fix any issues
+- Test cross browser/device & fix any issues
 - Provide a `<noscript>` content for browsers where JS is disabled
 - Minify/Uglify the JS/CSS/HTML resources for smaller payload size
 - Test app performance and make improvements where necessary
