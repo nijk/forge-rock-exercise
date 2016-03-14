@@ -53,7 +53,7 @@ export class Search implements OnInit {
     /**
      * Create a filters array by cloning the defaultFilter object
      */
-    filters: SearchFilter[] = [ Object.create(this._defaultFilter) ];
+    filters: SearchFilter[] = [ Object.assign({}, this._defaultFilter) ];
 
     ngOnInit() {
         if (!this._userAuthService.isUserAuthenticated()) {
@@ -66,8 +66,22 @@ export class Search implements OnInit {
      * Add new searchFilter objects to the filter.
      * Pushes logicalFilter (operator) and searchFilter objects to the filters array.
      */
-    public addAnother() {
-        this.filters.push( Object.create(this._defaultLogicalFilter), Object.create(this._defaultFilter) );
+    public addFilter() {
+        return this.filters.push( Object.assign({}, this._defaultLogicalFilter), Object.assign({}, this._defaultFilter) );
+    }
+
+    /**
+     * Remove a searchFilter objects (including the preceding logical operator) from the filter.
+     */
+    public removeFilter(i: number) {
+        // Also remove the previous item if index is not first item
+        const start = (i > 0) ? i - 1 : i;
+        this.filters.splice(start, 2);
+
+        // Update search if there's a value in the first field.
+        if (this.filters[0].search) {
+            this.submit();
+        }
     }
 
     /**
@@ -77,7 +91,7 @@ export class Search implements OnInit {
         this._userMessagesService.clearMessages();
         const credentials = this._userAuthService.getUserCredentials();
 
-        this._userSearchService.query(this.filters, credentials).subscribe(
+        return this._userSearchService.query(this.filters, credentials).subscribe(
             data => {
                 const messageType = (!!data.resultCount) ? 'success' : 'warning';
                 this._userMessagesService.addMessage(`${data.resultCount} results found`, messageType, false);

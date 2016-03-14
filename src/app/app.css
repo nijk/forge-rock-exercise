@@ -19,7 +19,12 @@
     max-width: 630px;
 }
 
+.well.well-sm {
+    margin-bottom: 10px;
+}
+
 .well .form-inline{
+    position: relative;
     margin-bottom: -5px;
 }
 
@@ -31,8 +36,22 @@
     text-align: center;
 }
 
-.well-sm {
-    margin-bottom: 10px;
+.remove-filter {
+    cursor: pointer;
+    float: right;
+    top: 10px;
+    width: 24px;
+    height: 24px;
+}
+
+.remove-filter::before {
+    padding: 5px;
+    border-radius: 15px;
+    background-color: #dfdfdf;
+}
+
+.text-hide {
+    text-indent: -999em;
 }
 
 .thumbnail {
