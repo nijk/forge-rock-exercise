@@ -22,22 +22,25 @@ export class UserAuthService extends UserBaseService {
 
   private _user: UserItem;
 
-  private _userCredentials: UserCredentials = {
-    // @fixme: remove hardcoded creds
-    username: 'user.0',
-    password: 'password'
-  };
+  private _userCredentials: UserCredentials;
 
   public getUser() {
     return this._user;
   }
 
   public getUserCredentials() {
+    // @todo: uncomment this for login bypass!
+    return {
+      username: 'user.0',
+      password: 'password'
+    };
     return this._userCredentials;
   }
 
   public isUserAuthenticated() {
-    return /*!!this._user;*/true; // @fixme: remove this!
+    // @todo: uncomment this for login bypass!
+    return true;
+    return !!this._user;
   }
 
   public login(credentials: UserCredentials) {

@@ -24,8 +24,8 @@ export abstract class UserBaseService {
   protected send(path: string, credentials: UserCredentials, search?: URLSearchParams) {
     const params: Object = {};
     params['headers'] = new Headers({
-      'X-Username': <string>credentials.username,
-      'X-Password': <string>credentials.password
+      'X-Username': <string> credentials.username,
+      'X-Password': <string> credentials.password
     });
 
     if (!!search) {
